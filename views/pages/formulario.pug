@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width,initial-scale=1.0")
+        link(rel="stylesheet", href="../css/bootstrap.min.css")
+        title #{nombrePagina}
+    body
+        div(class="container")
+            div(class="row")
+                div(class="col-lg-6 col-md-6 col-sm-12")
+                    form(action="/template", method="POST")
+                        div(class="mb-3")
+                            label(for="name",class="form-label") Username
+                            input(type="text", class="form-control" ,id="name" , name="name" ,placeholder="escribe el nombre")
+                        button(type="submit", class="btn btn-primary") Submit
+                div(class="col-lg-6 col-md-6 col-sm-12")
+                    if nombre
+                        p El nombre viene en el json: #{nombre}
+                    else
+                        p no hay nada

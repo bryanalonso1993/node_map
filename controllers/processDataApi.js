@@ -2,10 +2,6 @@ const axios = require('axios').default;
 const { request, response } = require('express');
 
 /**
- *  Export BulkCreate
- */
-const bulkData = require('../middlewares/bulkData');
-/**
  * Import models
  */
 const { Post, User } = require('../db/models'); 
