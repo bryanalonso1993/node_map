@@ -5,19 +5,73 @@ html(lang="es")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width,initial-scale=1.0")
         link(rel="stylesheet", href="../css/bootstrap.min.css")
+        link(rel="stylesheet", href="../css/map.css")
+        // stilos del mapa leaflet
+        link(rel="stylesheet", href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css", integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==", crossorigin="")
+        script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js", integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==", crossorigin="")
         title #{nombrePagina}
     body
+        nav(class="navbar navbar-dark bg-dark")
+            div(class="container-fluid")
+                a(class="navbar-brand", href="#") Home
+        br
         div(class="container")
             div(class="row")
                 div(class="col-lg-6 col-md-6 col-sm-12")
                     form(action="/home", method="POST")
                         div(class="mb-3")
                             label(for="name",class="form-label") Username
-                            input(type="text", class="form-control" ,id="name" , name="name" ,placeholder="escribe el nombre")
+                            input(type="text", class="form-control" ,list="user", id="name" , name="name" ,placeholder="escribe el nombre")
+                            datalist(id="user")
+                                if dataUser.length
+                                    each row in dataUser
+                                        option(value=`${row}`)
                         button(type="submit", class="btn btn-primary") Submit
                 div(class="col-lg-6 col-md-6 col-sm-12")
-                    if dataUser.length
-                        each row in dataUser
-                            li #{row}
-            div(class=row)
-                li hola
+                    h5 TABLA DE DATOS
+                    //pre=vardump(data)
+                    if data
+                        table(class="table table-striped")
+                            thead
+                                tr
+                                    th(scope="col") #
+                                    th(scope="col") Email
+                                    th(scope="col") Street
+                                    th(scope="col") Latitude
+                                    th(scope="col") Longitude
+                            tbody
+                                tr
+                                    th(scope="row") 1
+                                    td #{data.email}
+                                    td #{data.street}
+                                    td #{data.latitude}
+                                    td #{data.longitude}
+            div(class="row")
+                div(class="col-lg-12 col-md-12 col-sm-12")
+                    div(id="map")
+                        script(type="text/javascript").
+                            if (`#{data}`){
+                                const latitude = `#{data.latitude}`,
+                                      longitude = `#{data.longitude}`;
+                                const map = L.map("map").setView([-9.189967, -75.015152], 13);
+                                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+                                L.marker([latitude, longitude]).addTo(map).bindPopup('Mi casa').openPopup();
+                             }
+                            // const map = L.map('map').setView(,13);
+                            const dataValues = `#{dataUser}`.split(",");
+                            console.log(dataValues[0]);
+                            
+
+                    // p Email: #{data.email}
+                    // p Street: #{data.street}
+                    // p Latitude: #{data.latitude}
+                    //p Longitude: #{data.longitude}
+                    //p Name: #{data.name}
+                    //pre=vardump(data)
+            //         if dataUser.length
+            //             each row in dataUser
+            //                 li #{row}
+            // div(class=row)
+            //     li hola
+            //     pre=vardump(dataUser)

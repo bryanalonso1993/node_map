@@ -12,10 +12,12 @@ class Server{
     }
     middlewares(){
         const bodyParser = require('body-parser');
+        const vardump = require('../middlewares/vardump');
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended:true}));
         this.app.use(express.json());
         this.app.use(express.static('public'));
+        this.app.use(vardump);
     }
     viewEngine(){
         this.app.set('view engine', 'pug');
