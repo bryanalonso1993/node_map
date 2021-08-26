@@ -15,6 +15,7 @@ module.exports = function (){
     router.post('/template', exampleTemplate.postForm);
     router.get('/home', processDataViews.getDataUser);
     router.get('/map', processDataMaps.getDataUsers);
+    //router.post('/map', processDataMaps)
     router.post('/home', processDataViews.postDataUser);
     router.get('/other', (req, res) => {
         res.send('Other Sider');
